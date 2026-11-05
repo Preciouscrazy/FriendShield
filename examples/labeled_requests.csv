@@ -1,0 +1,13 @@
+request_id,account_age_days,requests_last_hour,mutual_friends,profile_complete,reported_before,expected_review
+synthetic-001,2,24,0,false,true,true
+synthetic-002,5,21,0,true,false,true
+synthetic-003,3,2,0,false,false,true
+synthetic-004,30,8,0,true,false,true
+synthetic-005,20,21,0,false,true,true
+synthetic-006,4,10,0,false,true,true
+synthetic-007,1,20,0,false,false,false
+synthetic-008,400,0,3,true,false,false
+synthetic-009,20,8,0,false,false,false
+synthetic-010,2,8,4,true,false,false
+synthetic-011,14,25,1,false,true,false
+synthetic-012,120,1,0,true,false,false

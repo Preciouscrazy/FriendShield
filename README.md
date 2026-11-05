@@ -1,28 +1,34 @@
 # FriendShield
 
-An offline, privacy-conscious suspicious friend-request triage prototype for games.
+An **offline, privacy-conscious friend-request review and evaluation prototype** for games.
 
-FriendShield ranks synthetic or user-authorized friend-request metadata using explainable rules and produces a review queue. It **does not** connect to Riot accounts, auto-reject requests, scrape friend lists, bypass platform protections, or identify actual bots with certainty.
+FriendShield scores synthetic or user-authorized request metadata using explainable rules, and optionally evaluates review decisions against **explicitly labeled examples**. It does **not** access Riot accounts, block requests, scrape friend lists, call game APIs, or reliably identify bots. Not affiliated with Riot Games.
 
 ## Quick start
 
-Python 3.10+; standard library only.
+Requires Python 3.10+; standard library only at runtime.
 
 ```bash
-python -m friendshield --input examples/requests.csv --output review.json
+python -m pip install -e .
 python -m unittest discover -s tests -v
+python -m friendshield --input examples/requests.csv --output review.json
+python -m friendshield --evaluate examples/labeled_requests.csv --threshold 60 --output evaluation-report.json
 ```
 
-CSV columns: `request_id,account_age_days,requests_last_hour,mutual_friends,profile_complete,reported_before`. `profile_complete` and `reported_before` accept `true`/`false` or `1`/`0`. No usernames, messages, or other personal identifiers are required.
+Review input columns: `request_id,account_age_days,requests_last_hour,mutual_friends,profile_complete,reported_before`. Boolean columns accept `true/false` or `1/0`. Evaluation CSV adds `expected_review`, which is a **hypothetical advisory-review label**, not a bot/non-bot label. No usernames or message bodies are needed.
 
-## How it works
+## Evaluation
 
-Rules score young accounts, unusually high request velocity, missing profile fields, and prior reports. Mutual friends slightly reduce the score. Results are labeled `review`, `caution`, or `low_signal` and include reasons. **Never use the score as proof of misconduct**. Human review is required before any action. Rule thresholds are illustrative and must be validated for false positives before deployment.
+`--evaluate` measures the existing rules' predictions (`score >= --threshold`) against supplied labels. Default threshold is 60, matching the `review` score band. `caution` remains a separate descriptive score label, not a positive prediction at threshold 60.
 
-## Security and privacy
+The report contains a confusion matrix, precision, recall, specificity, accuracy, F1, false-positive rate, false-negative rate, and auditable per-request decisions. Rates with zero denominators are JSON `null`, not fabricated zeros.
 
-Process local CSV files only. No network calls, API credentials, automatic blocking, or retention service. Avoid collecting sensitive personal data. Only use data you have permission to process. Not affiliated with or endorsed by Riot Games.
+**Synthetic fixture at threshold 60** (12 fabricated requests; 6 labeled for review): TP 4, FP 2, TN 4, FN 2. Precision and recall are both 66.7%; FPR and FNR are both 33.3%. These are test-fixture measurements, **not real-world performance estimates**. See [evaluation guide](docs/evaluation.md).
+
+## Scoring and safety
+
+Rules consider account age, request volume, profile completeness, prior-report indicator, and mutual connections. `review`, `caution`, and `low_signal` are advisory categories only. Human review is required before any action. Poor quality or imbalanced labels can mislead metrics; real-world deployment requires permission, careful validation, privacy protections, and false-positive impact analysis.
 
 ## Development
 
-Run `python -m unittest discover -s tests -v`. License: MIT.
+GitHub Actions tests Python 3.10, 3.11, and 3.12, and checks a generated JSON evaluation report. MIT licensed.
