@@ -14,7 +14,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: python -m unittest discover -s tests -v
-      - name: Generate example evaluation report
-        run: PYTHONPATH=src python -m friendshield --evaluate examples/labeled_requests.csv --output evaluation-report.json
-      - name: Validate evaluation JSON
-        run: python -m json.tool evaluation-report.json > /dev/null
+      - name: Generate evaluation JSON and HTML dashboard
+        run: PYTHONPATH=src python -m friendshield --evaluate examples/labeled_requests.csv --output evaluation-report.json --dashboard evaluation-dashboard.html
+      - name: Validate report and dashboard
+        run: |
+          python -m json.tool evaluation-report.json > /dev/null
+          python -c "from pathlib import Path; h=Path('evaluation-dashboard.html').read_text(); assert '<svg id=\"chart\"' in h and 'id=\"threshold\"' in h and 'https://' not in h"

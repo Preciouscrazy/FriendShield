@@ -7,3 +7,4 @@ dist/
 build/
 review.json
 evaluation-report.json
+evaluation-dashboard.html
