@@ -4,6 +4,17 @@ An **offline, privacy-conscious friend-request review, evaluation, and visualiza
 
 FriendShield assigns explainable advisory-review scores to synthetic or user-authorized metadata. It does **not** access Riot Games accounts, identify actual bots with certainty, auto-block requests, scrape lists, or use game APIs. Independent educational project; not affiliated with Riot Games.
 
+## 60-second walkthrough
+
+Open the [sample evaluation](evidence/sample-evaluation.json) to inspect individual decisions, or download the [standalone dashboard](evidence/sample-dashboard.html) and open it in a browser. At threshold 60, precision and recall are both 66.7% on the 12-row synthetic fixture. All 23 tests passed in a local run, including the CLI and dashboard generation checks.
+
+| Synthetic scenario | Score | What the result shows |
+|---|---:|---|
+| `synthetic-007` · false positive | 75 | A new account, high request volume, and an incomplete profile crossed the threshold even though the fixture labels it routine. |
+| `synthetic-003` · false negative | 40 | A new account and an incomplete profile scored below the threshold even though the fixture labels the case for review. |
+
+The report keeps the reasons behind each score visible. Moving the dashboard threshold changes which scores qualify for review while keeping the scoring rules fixed. The fixture labels describe hypothetical human-review decisions.
+
 ## Quick start
 
 Python 3.10+; standard library only.
