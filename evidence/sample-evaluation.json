@@ -1,0 +1,172 @@
+{
+  "confusion_matrix": {
+    "false_negative": 2,
+    "false_positive": 2,
+    "true_negative": 4,
+    "true_positive": 4
+  },
+  "decisions": [
+    {
+      "expected_review": true,
+      "outcome": "true_positive",
+      "predicted_review": true,
+      "reasons": [
+        "new account",
+        "high recent request volume",
+        "incomplete profile",
+        "prior report indicator"
+      ],
+      "request_id": "synthetic-001",
+      "score": 100,
+      "score_label": "review"
+    },
+    {
+      "expected_review": true,
+      "outcome": "true_positive",
+      "predicted_review": true,
+      "reasons": [
+        "new account",
+        "high recent request volume"
+      ],
+      "request_id": "synthetic-002",
+      "score": 60,
+      "score_label": "review"
+    },
+    {
+      "expected_review": true,
+      "outcome": "false_negative",
+      "predicted_review": false,
+      "reasons": [
+        "new account",
+        "incomplete profile"
+      ],
+      "request_id": "synthetic-003",
+      "score": 40,
+      "score_label": "caution"
+    },
+    {
+      "expected_review": true,
+      "outcome": "false_negative",
+      "predicted_review": false,
+      "reasons": [
+        "elevated recent request volume"
+      ],
+      "request_id": "synthetic-004",
+      "score": 15,
+      "score_label": "low_signal"
+    },
+    {
+      "expected_review": true,
+      "outcome": "true_positive",
+      "predicted_review": true,
+      "reasons": [
+        "high recent request volume",
+        "incomplete profile",
+        "prior report indicator"
+      ],
+      "request_id": "synthetic-005",
+      "score": 80,
+      "score_label": "review"
+    },
+    {
+      "expected_review": true,
+      "outcome": "true_positive",
+      "predicted_review": true,
+      "reasons": [
+        "new account",
+        "elevated recent request volume",
+        "incomplete profile",
+        "prior report indicator"
+      ],
+      "request_id": "synthetic-006",
+      "score": 85,
+      "score_label": "review"
+    },
+    {
+      "expected_review": false,
+      "outcome": "false_positive",
+      "predicted_review": true,
+      "reasons": [
+        "new account",
+        "high recent request volume",
+        "incomplete profile"
+      ],
+      "request_id": "synthetic-007",
+      "score": 75,
+      "score_label": "review"
+    },
+    {
+      "expected_review": false,
+      "outcome": "true_negative",
+      "predicted_review": false,
+      "reasons": [
+        "mutual connections reduce score"
+      ],
+      "request_id": "synthetic-008",
+      "score": 0,
+      "score_label": "low_signal"
+    },
+    {
+      "expected_review": false,
+      "outcome": "true_negative",
+      "predicted_review": false,
+      "reasons": [
+        "elevated recent request volume",
+        "incomplete profile"
+      ],
+      "request_id": "synthetic-009",
+      "score": 30,
+      "score_label": "caution"
+    },
+    {
+      "expected_review": false,
+      "outcome": "true_negative",
+      "predicted_review": false,
+      "reasons": [
+        "new account",
+        "elevated recent request volume",
+        "mutual connections reduce score"
+      ],
+      "request_id": "synthetic-010",
+      "score": 30,
+      "score_label": "caution"
+    },
+    {
+      "expected_review": false,
+      "outcome": "false_positive",
+      "predicted_review": true,
+      "reasons": [
+        "high recent request volume",
+        "incomplete profile",
+        "prior report indicator"
+      ],
+      "request_id": "synthetic-011",
+      "score": 80,
+      "score_label": "review"
+    },
+    {
+      "expected_review": false,
+      "outcome": "true_negative",
+      "predicted_review": false,
+      "reasons": [],
+      "request_id": "synthetic-012",
+      "score": 0,
+      "score_label": "low_signal"
+    }
+  ],
+  "limitations": "Labels are scenario annotations, not verified bot identities. Metrics describe only the supplied labeled sample and do not estimate real-world error rates. Advisory review only; no blocking.",
+  "metrics": {
+    "accuracy": 0.6666666666666666,
+    "f1": 0.6666666666666666,
+    "false_negative_rate": 0.3333333333333333,
+    "false_positive_rate": 0.3333333333333333,
+    "precision": 0.6666666666666666,
+    "recall": 0.6666666666666666,
+    "specificity": 0.6666666666666666
+  },
+  "mode": "offline_labeled_evaluation",
+  "positive_label": "expected_review",
+  "prediction_rule": "score >= threshold",
+  "sample_count": 12,
+  "threshold": 60
+}
