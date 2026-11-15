@@ -6,7 +6,7 @@ FriendShield assigns explainable advisory-review scores to synthetic or user-aut
 
 ## 60-second walkthrough
 
-Open the [sample evaluation](evidence/sample-evaluation.json) to inspect individual decisions, or download the [standalone dashboard](evidence/sample-dashboard.html) and open it in a browser. At threshold 60, precision and recall are both 66.7% on the 12-row synthetic fixture. All 23 tests passed in a local run, including the CLI and dashboard generation checks.
+Open the [sample evaluation](evidence/sample-evaluation.json) to inspect individual decisions, or download the [standalone dashboard](evidence/sample-dashboard.html) and open it in a browser. At threshold 60, precision and recall are both 66.7% on the 12-row synthetic fixture. The test suite includes CLI and dashboard generation checks; [GitHub Actions verification](evidence/validation.md) covers the documented Python/OS matrix.
 
 | Synthetic scenario | Score | What the result shows |
 |---|---:|---|
@@ -40,4 +40,4 @@ See [evaluation methodology](docs/evaluation.md) and [dashboard guide](docs/dash
 
 All input is local CSV. Metadata columns: `request_id,account_age_days,requests_last_hour,mutual_friends,profile_complete,reported_before`. Evaluation inputs add `expected_review`, a **hypothetical human-review annotation**, never a verified misconduct or bot label. Only process data you are authorized to use, avoid personal identifiers, and require human judgment before any action.
 
-GitHub Actions runs tests on Python 3.10–3.12 and checks both JSON and standalone HTML dashboard generation. MIT licensed.
+GitHub Actions runs the tests on Python 3.10–3.12 on **Windows and Ubuntu** and checks JSON/HTML generation. See [validation and reproduction notes](evidence/validation.md). The CLI rejects report/dashboard destinations that alias the input CSV or each other, including hard links; this guards against accidental source overwrites, but does not provide concurrent-writer coordination. MIT licensed.

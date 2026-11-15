@@ -1,10 +1,18 @@
 import argparse
 import json
-import os
+from pathlib import Path
 
 from .core import load_requests, score_requests
 from .dashboard import save_dashboard
 from .evaluation import evaluate_labeled_requests, load_labeled_requests
+
+
+def _same_file(left, right):
+    """Reject both matching paths and existing hard-link aliases."""
+    source, target = Path(left), Path(right)
+    return source.resolve() == target.resolve() or (
+        source.exists() and target.exists() and source.samefile(target)
+    )
 
 
 def main():
@@ -18,17 +26,22 @@ def main():
                         help="Evaluation review threshold, integer 0-100 (default: 60)")
     args = parser.parse_args()
     try:
+        input_path = args.evaluate or args.input
+        output_path = args.output or ("evaluation-report.json" if args.evaluate else "review.json")
+        if _same_file(input_path, output_path):
+            raise ValueError("JSON report must not overwrite input CSV")
+        if args.dashboard:
+            if _same_file(input_path, args.dashboard):
+                raise ValueError("dashboard must not overwrite input CSV")
+            if _same_file(output_path, args.dashboard):
+                raise ValueError("JSON report and dashboard must use different paths")
         if args.evaluate:
             labeled = load_labeled_requests(args.evaluate)
             report = evaluate_labeled_requests(labeled, threshold=args.threshold)
-            output_path = args.output or "evaluation-report.json"
-            if args.dashboard and os.path.abspath(args.dashboard) == os.path.abspath(output_path):
-                raise ValueError("JSON report and dashboard must use different paths")
         else:
             if args.threshold != 60 or args.dashboard:
                 raise ValueError("--threshold and --dashboard require --evaluate")
             report = score_requests(load_requests(args.input))
-            output_path = args.output or "review.json"
         with open(output_path, "w", encoding="utf-8") as handle:
             json.dump(report, handle, indent=2, sort_keys=True, allow_nan=False)
             handle.write("\n")
