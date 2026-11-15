@@ -24,9 +24,12 @@ python -m friendshield --evaluate examples/labeled_requests.csv --threshold 60 -
 
 ## GitHub-hosted verification
 
+**Verified implementation commit:** [`02899cff4a7f58a2d715c0d6e0a96e7e3f9020c3`](https://github.com/Preciouscrazy/FriendShield/commit/02899cff4a7f58a2d715c0d6e0a96e7e3f9020c3)  
+**Successful cross-platform run:** [GitHub Actions #43697266163](https://github.com/Preciouscrazy/FriendShield/actions/runs/43697266163)
+
 | Environment | Python 3.10 | Python 3.11 | Python 3.12 |
 | --- | --- | --- | --- |
-| Ubuntu 24.04 | Pending | Pending | Pending |
-| Windows latest | Pending | Pending | Pending |
+| Ubuntu 24.04 | **PASS** | **PASS** | **PASS** |
+| Windows latest | **PASS** | **PASS** | **PASS** |
 
-**Not yet verified on the upgrade branch.** This table will be updated only after the final commit's hosted workflows complete successfully.
+This evidence verifies the linked implementation commit; a subsequent documentation-only commit must also complete its own CI run.
